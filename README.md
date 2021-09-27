@@ -6,6 +6,5 @@ Project made with RESTful Web APIs, C#, Microsoft SQL Server and React
 
 Setup instructions in PDF
 
-https://jesuscarlos.github.io/MoviesApp/
 
 
