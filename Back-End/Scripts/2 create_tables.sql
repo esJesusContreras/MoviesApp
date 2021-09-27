@@ -1,0 +1,102 @@
+USE [MovieAppDatabase]
+GO
+
+/****** Object:  Table [dbo].[Actor]    Script Date: 9/26/2021 9:54:14 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Actor](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](100) NULL,
+ CONSTRAINT [PK_Actor] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ActorMovie]    Script Date: 9/26/2021 9:54:14 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ActorMovie](
+	[MovieID] [int] NOT NULL,
+	[ActorID] [int] NOT NULL,
+ CONSTRAINT [PK_ActorMovie] PRIMARY KEY CLUSTERED 
+(
+	[MovieID] ASC,
+	[ActorID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Genre]    Script Date: 9/26/2021 9:54:14 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Genre](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](100) NULL,
+ CONSTRAINT [PK_Genre] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[GenreMovie]    Script Date: 9/26/2021 9:54:14 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[GenreMovie](
+	[MovieID] [int] NOT NULL,
+	[GenreID] [int] NOT NULL,
+ CONSTRAINT [PK_GenreMovie] PRIMARY KEY CLUSTERED 
+(
+	[MovieID] ASC,
+	[GenreID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Movie]    Script Date: 9/26/2021 9:54:14 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Movie](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](100) NULL,
+	[Year] SMALLINT NULL,
+	[Director] [nvarchar](100) NULL,
+	[Duration] SMALLINT NULL,
+ CONSTRAINT [PK_Movie] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[ActorMovie]  WITH CHECK ADD  CONSTRAINT [Actor_ActorMovie] FOREIGN KEY([ActorID])
+REFERENCES [dbo].[Actor] ([ID])
+GO
+ALTER TABLE [dbo].[ActorMovie] CHECK CONSTRAINT [Actor_ActorMovie]
+GO
+ALTER TABLE [dbo].[ActorMovie]  WITH CHECK ADD  CONSTRAINT [Movie_ActorMovie] FOREIGN KEY([MovieID])
+REFERENCES [dbo].[Movie] ([ID])
+GO
+ALTER TABLE [dbo].[ActorMovie] CHECK CONSTRAINT [Movie_ActorMovie]
+GO
+ALTER TABLE [dbo].[GenreMovie]  WITH CHECK ADD  CONSTRAINT [Genre_GenreMovie] FOREIGN KEY([GenreID])
+REFERENCES [dbo].[Genre] ([ID])
+GO
+ALTER TABLE [dbo].[GenreMovie] CHECK CONSTRAINT [Genre_GenreMovie]
+GO
+ALTER TABLE [dbo].[GenreMovie]  WITH CHECK ADD  CONSTRAINT [Movie_GenreMovie] FOREIGN KEY([MovieID])
+REFERENCES [dbo].[Movie] ([ID])
+GO
+ALTER TABLE [dbo].[GenreMovie] CHECK CONSTRAINT [Movie_GenreMovie]
+GO
+USE [master]
+GO
+ALTER DATABASE [MovieAppDatabase] SET  READ_WRITE 
+GO
